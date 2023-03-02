@@ -1,0 +1,126 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Models {
+  id              String         @id @default(uuid())
+  name            String
+  sku             String?        @default("")
+  description     String?        @default("")
+  groupId         String?
+  manufacturersId String?
+  Group           Group?         @relation(fields: [groupId], references: [id])
+  Manufacturers   Manufacturers? @relation(fields: [manufacturersId], references: [id])
+  item            Item[]
+}
+
+model Manufacturers {
+  id     String   @id @default(uuid())
+  name   String
+  models Models[]
+}
+
+model Supplier {
+  id            String       @id @default(uuid())
+  name          String
+  service       Service[]
+  ServiceType   ServiceType? @relation(fields: [serviceTypeId], references: [id])
+  serviceTypeId String?
+}
+
+model ServiceType {
+  id            String          @id @default(uuid())
+  name          String
+  supplier      Supplier[]
+  serviceDemand ServiceDemand[]
+}
+
+model Service {
+  id             String    @id @default(uuid())
+  lineNumber     String
+  contractNumber String
+  obs            String
+  Immobile       Immobile? @relation(fields: [immobileId], references: [id])
+  immobileId     String?
+  Status         Status?   @relation(fields: [statusId], references: [id])
+  statusId       String?
+  Supplier       Supplier? @relation(fields: [supplierId], references: [id])
+  supplierId     String?
+}
+
+model Immobile {
+  id            String          @id @default(uuid())
+  name          String
+  place         String
+  district      String
+  city          String
+  latitude      String
+  longitude     String
+  serviceDemand ServiceDemand[]
+  itemDemand    ItemDemand[]
+  item          Item[]
+  Opms          Opms?           @relation(fields: [opmsId], references: [id])
+  opmsId        String?
+  service       Service[]
+}
+
+model ServiceDemand {
+  id            String       @id @default(uuid())
+  amount        String
+  justify       String
+  Immobile      Immobile?    @relation(fields: [immobileId], references: [id])
+  immobileId    String?
+  ServiceType   ServiceType? @relation(fields: [serviceTypeId], references: [id])
+  serviceTypeId String?
+}
+
+model ItemDemand {
+  id         String    @id @default(uuid())
+  amount     String
+  justify    String
+  Immobile   Immobile? @relation(fields: [immobileId], references: [id])
+  immobileId String?
+  Group      Group?    @relation(fields: [groupId], references: [id])
+  groupId    String?
+}
+
+model Group {
+  id         String       @id @default(uuid())
+  name       String
+  models     Models[]
+  itemDemand ItemDemand[]
+}
+
+model Opms {
+  id       String     @id @default(uuid())
+  name     String
+  acronym  String
+  immobile Immobile[]
+}
+
+model Status {
+  id        String    @id @default(uuid())
+  name      String
+  serviceId String?
+  item      Item[]
+  service   Service[]
+}
+
+model Item {
+  id           String    @id @default(uuid())
+  serialNumber String
+  tombNumber   String
+  imei         String
+  obs          String
+  Models       Models?   @relation(fields: [modelsId], references: [id])
+  modelsId     String?
+  Status       Status?   @relation(fields: [statusId], references: [id])
+  statusId     String?
+  Immobile     Immobile? @relation(fields: [immobileId], references: [id])
+  immobileId   String?
+}
