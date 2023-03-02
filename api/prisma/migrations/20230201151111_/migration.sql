@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "Models" ALTER COLUMN "sku" DROP NOT NULL,
+ALTER COLUMN "sku" SET DEFAULT '',
+ALTER COLUMN "description" DROP NOT NULL,
+ALTER COLUMN "description" SET DEFAULT '';

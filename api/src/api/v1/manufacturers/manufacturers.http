@@ -1,0 +1,28 @@
+@base_url = http://localhost:3000/api
+
+################################ MODELS #################################
+GET {{base_url}}/v1/models
+Authorization: {{token}}
+##########
+GET {{base_url}}/v1/models/1
+Authorization: {{token}}
+##########
+POST {{base_url}}/v1/models
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+  "name": "teste"
+}
+
+##########
+PATCH {{base_url}}/v1/models/1
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+  "name": "teste 2"
+}
+
+##########
+DELETE {{base_url}}/v1/models/3
