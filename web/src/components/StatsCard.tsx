@@ -1,10 +1,4 @@
-import {
-  Box,
-  Flex,
-  Stat,
-  StatLabel,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, Flex, Heading, useColorModeValue } from "@chakra-ui/react";
 import Router from "next/router";
 import { ReactNode } from "react";
 import { colors } from "../utils/colors";
@@ -18,9 +12,9 @@ interface StatsCardProps {
 const StatsCard = (props: StatsCardProps) => {
   const { title, icon, path } = props;
   return (
-    <Stat
-      m={"4"}
-      width={"xs"}
+    <Box
+      m={[1, 3]}
+      width={"19rem"}
       cursor={"pointer"}
       px={{ base: 1, md: 5 }}
       py={"4"}
@@ -38,12 +32,12 @@ const StatsCard = (props: StatsCardProps) => {
           {icon}
         </Box>
         <Box pl={{ base: 2, md: 4 }}>
-          <StatLabel fontSize={"md"} fontWeight={"medium"}>
+          <Heading fontSize={"md"} fontWeight={"medium"}>
             {title}
-          </StatLabel>
+          </Heading>
         </Box>
       </Flex>
-    </Stat>
+    </Box>
   );
 };
 

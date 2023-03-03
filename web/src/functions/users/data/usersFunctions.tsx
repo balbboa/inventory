@@ -3,48 +3,45 @@ import { ToastId, UseToastOptions } from "@chakra-ui/react";
 // React
 import { Dispatch, SetStateAction } from "react";
 // Dado estático
-import { SERVICE_DEMAND_INITIAL_DATA } from "../../../pages/cadastrar-demanda-servicos";
+import { SUPPLIER_INITIAL_DATA } from "../../../pages/cadastrar-fornecedores";
 // Interfaces
-import {
-  IServiceDemandRegister,
-  IServiceDemandRequest,
-} from "./serviceDemandsInterfaces";
+import { IUserRegister, IUserRequest } from "./usersInterfaces";
 import apiLaravel from "../../../services/apiLaravel";
 import { getAPIClientLaravel } from "../../../services/axiosLaravel";
 
-export const getServiceDemands = async () => {
-  let serviceDemand: IServiceDemandRequest = {
+export const getUsers = async () => {
+  let user: IUserRequest = {
     lenght: 0,
-    serviceDemands: [],
-  } as IServiceDemandRequest;
+    users: [],
+  } as IUserRequest;
 
-  await apiLaravel.get("serviceDemands").then((request) => {
-    serviceDemand = request.data.serviceDemands;
+  await apiLaravel.get("users").then((request) => {
+    user = request.data.users;
   });
-  return serviceDemand;
+  return user;
 };
 
-// Salva a Demanda de serviço
-export const handleSaveServiceDemand = async (
-  registerServiceDemand: IServiceDemandRegister,
-  setServiceDemandRequest: Dispatch<SetStateAction<IServiceDemandRequest>>,
-  setRegisterServiceDemand: Dispatch<SetStateAction<IServiceDemandRegister>>,
+// Salva o fornecedor
+export const handleSaveUser = async (
+  registerUser: IUserRegister,
+  setUserRequest: Dispatch<SetStateAction<IUserRequest>>,
+  setRegisterUser: Dispatch<SetStateAction<IUserRegister>>,
   toast: (options?: UseToastOptions | undefined) => ToastId,
   setFormError: Dispatch<SetStateAction<string>>
 ) => {
   const apiLaravel = getAPIClientLaravel();
-  if (registerServiceDemand.serviceType !== "") {
+  if (registerUser.name !== "") {
     await apiLaravel
-      .post("serviceDemands", registerServiceDemand)
+      .post("users", registerUser)
       .then(async () => {
         // Reinicia o formulário
-        setRegisterServiceDemand(SERVICE_DEMAND_INITIAL_DATA);
+        setRegisterUser(SUPPLIER_INITIAL_DATA);
         // Atualiza a listagem de organizações
-        setServiceDemandRequest(await getServiceDemands());
+        setUserRequest(await getUsers());
         // Mensagem de sucesso
         toast({
           title: "Sucesso!",
-          description: "Demanda de serviço cadastrado.",
+          description: "Fornecedor cadastrado.",
           status: "success",
           position: "top",
           isClosable: true,
@@ -52,7 +49,7 @@ export const handleSaveServiceDemand = async (
       })
       .catch((error) => {
         toast({
-          title: "Erro ao cadastrar a Demanda de serviço",
+          title: "Erro ao cadastrar o fornecedor",
           description: error.status,
           status: "error",
           position: "top",
@@ -61,9 +58,9 @@ export const handleSaveServiceDemand = async (
       });
   } else {
     // Informa o erro do formulário
-    setFormError("registerServiceDemand");
+    setFormError("registerUser");
     toast({
-      title: "Erro ao cadastrar a Demanda de serviço",
+      title: "Erro ao cadastrar o fornecedor",
       description: "Campo NOME inválido",
       status: "error",
       position: "top",
@@ -72,31 +69,28 @@ export const handleSaveServiceDemand = async (
   }
 };
 
-// Edita a Demanda de serviço
-const handleEditServiceDemand = async (
-  registerServiceDemand: IServiceDemandRegister,
-  setServiceDemandRequest: Dispatch<SetStateAction<IServiceDemandRequest>>,
-  setRegisterServiceDemand: Dispatch<SetStateAction<IServiceDemandRegister>>,
+// Edita o fornecedor
+const handleEditUser = async (
+  registerUser: IUserRegister,
+  setUserRequest: Dispatch<SetStateAction<IUserRequest>>,
+  setRegisterUser: Dispatch<SetStateAction<IUserRegister>>,
   setIsEdit: Dispatch<SetStateAction<boolean>>,
   toast: (options?: UseToastOptions | undefined) => ToastId,
   setFormError: Dispatch<SetStateAction<string>>
 ) => {
   const apiLaravel = getAPIClientLaravel();
-  if (registerServiceDemand.serviceType !== "") {
+  if (registerUser.name !== "") {
     await apiLaravel
-      .patch(
-        "serviceDemands/" + registerServiceDemand.id,
-        registerServiceDemand
-      )
+      .patch("users/" + registerUser.id, registerUser)
       .then(async () => {
         // Reinicia o formulário
-        setRegisterServiceDemand(SERVICE_DEMAND_INITIAL_DATA);
+        setRegisterUser(SUPPLIER_INITIAL_DATA);
         // Atualiza a listagem de organizações
-        setServiceDemandRequest(await getServiceDemands());
+        setUserRequest(await getUsers());
         // Mensagem de sucesso
         toast({
           title: "Sucesso!",
-          description: "Demanda de serviço editado.",
+          description: "Fornecedor editado.",
           status: "success",
           position: "top",
           isClosable: true,
@@ -114,9 +108,9 @@ const handleEditServiceDemand = async (
       });
   } else {
     // Informa o erro do formulário
-    setFormError("registerServiceDemand");
+    setFormError("registerUser");
     toast({
-      title: "Erro ao cadastrar a Demanda de serviço",
+      title: "Erro ao cadastrar o fornecedor",
       description: "Campo NOME inválido",
       status: "error",
       position: "top",
@@ -125,27 +119,27 @@ const handleEditServiceDemand = async (
   }
 };
 
-// Deleta a Demanda de serviço
-export const handleDeleteServiceDemand = async (
-  registerServiceDemand: IServiceDemandRegister,
-  setServiceDemandRequest: Dispatch<SetStateAction<IServiceDemandRequest>>,
-  setRegisterServiceDemand: Dispatch<SetStateAction<IServiceDemandRegister>>,
+// Deleta o fornecedor
+export const handleDeleteUser = async (
+  registerUser: IUserRegister,
+  setUserRequest: Dispatch<SetStateAction<IUserRequest>>,
+  setRegisterUser: Dispatch<SetStateAction<IUserRegister>>,
   setIsEdit: Dispatch<SetStateAction<boolean>>,
   toast: (options?: UseToastOptions | undefined) => ToastId
 ) => {
   const apiLaravel = getAPIClientLaravel();
 
   await apiLaravel
-    .delete("serviceDemands/" + registerServiceDemand.id)
+    .delete("users/" + registerUser.id)
     .then(async () => {
       // Reinicia o formulário
-      setRegisterServiceDemand(SERVICE_DEMAND_INITIAL_DATA);
+      setRegisterUser(SUPPLIER_INITIAL_DATA);
       // Atualiza a listagem de organizações
-      setServiceDemandRequest(await getServiceDemands());
+      setUserRequest(await getUsers());
       // Mensagem de sucesso
       toast({
         title: "Sucesso!",
-        description: "Demanda de serviço deletado.",
+        description: "Fornecedor deletado.",
         status: "success",
         position: "top",
         isClosable: true,
@@ -163,4 +157,4 @@ export const handleDeleteServiceDemand = async (
     });
 };
 
-export default handleEditServiceDemand;
+export default handleEditUser;

@@ -21,38 +21,38 @@ import { Fragment, useEffect, useState } from "react";
 import { BsPlusSquare } from "react-icons/bs";
 import { FiEdit, FiTrash } from "react-icons/fi";
 // Layout
-import Layout from "../../../components/Layout";
+import Layout from "../../components/Layout";
 // Componentes
-import Card from "../../../components/Card";
-import DefaultTable from "../../../components/Table";
+import Card from "../../components/Card";
+import DefaultTable from "../../components/Table";
 // Cores
-import { colors } from "../../../utils/colors";
+import { colors } from "../../utils/colors";
 // Interfaces
-import { IServiceDemandRegister } from "../../../functions/serviceDemands/data/serviceDemandsInterfaces";
+import { IItemDemandRegister } from "../../functions/itemDemands/data/itemDemandsInterfaces";
 // Funções
-import handleEditServiceDemand, {
-  getServiceDemands,
-  handleSaveServiceDemand,
-  handleDeleteServiceDemand,
-} from "../../../functions/serviceDemands/data/serviceDemandsFunctions";
-import { getGroups } from "../../../functions/groups/data/groupsFunctions";
-import { IGroupRegister } from "../../../functions/groups/data/groupsInterfaces";
+import handleEditItemDemand, {
+  getItemDemands,
+  handleSaveItemDemand,
+  handleDeleteItemDemand,
+} from "../../functions/itemDemands/data/itemDemandsFunctions";
+import { getGroups } from "../../functions/groups/data/groupsFunctions";
+import { IGroupRegister } from "../../functions/groups/data/groupsInterfaces";
 
-export const SERVICE_DEMAND_INITIAL_DATA: IServiceDemandRegister = {
-  serviceType: "",
+export const ITEM_DEMAND_INITIAL_DATA: IItemDemandRegister = {
+  groupId: "",
   amount: "",
   justify: "",
 };
 
 // Componente principal
-const CadastrarServiceDemandas = () => {
+const CadastrarItemDemandas = () => {
   // hooks
 
   // Organização
-  const [registerServiceDemand, setRegisterServiceDemand] =
-    useState<IServiceDemandRegister>(SERVICE_DEMAND_INITIAL_DATA);
+  const [registerItemDemand, setRegisterItemDemand] =
+    useState<IItemDemandRegister>(ITEM_DEMAND_INITIAL_DATA);
   // Requisisões das organizações
-  const [serviceDemandRequest, setServiceDemandRequest] = useState<any>();
+  const [itemDemandRequest, setItemDemandRequest] = useState<any>();
   const [optionsGroups, setOptionsGroups] = useState<any>();
   // Erros do formulário
   const [formError, setFormError] = useState("");
@@ -63,8 +63,8 @@ const CadastrarServiceDemandas = () => {
 
   const handleGetData = async () => {
     // Obtem as organizações
-    const serviceDemand = await getServiceDemands();
-    setServiceDemandRequest(serviceDemand);
+    const itemDemand = await getItemDemands();
+    setItemDemandRequest(itemDemand);
   };
 
   const handleSelectGroups = async () => {
@@ -82,26 +82,26 @@ const CadastrarServiceDemandas = () => {
   const colorButtonEdit = useColorModeValue("gray.300", colors.graySky);
 
   return (
-    <Layout props={{ title: "Cadastrar demanda de serviço" }}>
+    <Layout props={{ title: "Cadastrar demanda de item" }}>
       <Card
         props={{
           title: isEdit
-            ? "Editar demanda de serviço"
-            : "Cadastrar demanda de serviço",
+            ? "Editar demanda de item"
+            : "Cadastrar demanda de item",
           maxW: 1000,
         }}
       >
         <FormControl padding={5}>
-          <FormLabel>Demanda de serviço</FormLabel>
+          <FormLabel>Demanda de Item</FormLabel>
           <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
             <Select
-              placeholder="Tipo de serviço"
-              value={registerServiceDemand.serviceType}
-              isInvalid={formError === "registerServiceDemand"}
+              placeholder="Grupo"
+              value={registerItemDemand.groupId}
+              isInvalid={formError === "registerItemDemand"}
               onChange={(event) => {
-                setRegisterServiceDemand({
-                  ...registerServiceDemand,
-                  serviceType: event.currentTarget.value,
+                setRegisterItemDemand({
+                  ...registerItemDemand,
+                  groupId: event.currentTarget.value,
                 });
                 setFormError("");
               }}
@@ -112,16 +112,15 @@ const CadastrarServiceDemandas = () => {
                 </option>
               ))}
             </Select>
-
             <Input
               ml={5}
               placeholder="Quantidade"
               type="text"
-              value={registerServiceDemand.amount}
-              isInvalid={formError === "registerServiceDemand"}
+              value={registerItemDemand.amount}
+              isInvalid={formError === "registerItemDemand"}
               onChange={(event) => {
-                setRegisterServiceDemand({
-                  ...registerServiceDemand,
+                setRegisterItemDemand({
+                  ...registerItemDemand,
                   amount: event.currentTarget.value.toUpperCase(),
                 });
                 setFormError("");
@@ -131,11 +130,11 @@ const CadastrarServiceDemandas = () => {
               ml={5}
               placeholder="Justificativa"
               type="text"
-              value={registerServiceDemand.justify}
-              isInvalid={formError === "registerServiceDemand"}
+              value={registerItemDemand.justify}
+              isInvalid={formError === "registerItemDemand"}
               onChange={(event) => {
-                setRegisterServiceDemand({
-                  ...registerServiceDemand,
+                setRegisterItemDemand({
+                  ...registerItemDemand,
                   justify: event.currentTarget.value.toUpperCase(),
                 });
                 setFormError("");
@@ -148,18 +147,18 @@ const CadastrarServiceDemandas = () => {
               variant="solid"
               onClick={() => {
                 isEdit
-                  ? handleEditServiceDemand(
-                      registerServiceDemand,
-                      setServiceDemandRequest,
-                      setRegisterServiceDemand,
+                  ? handleEditItemDemand(
+                      registerItemDemand,
+                      setItemDemandRequest,
+                      setRegisterItemDemand,
                       setIsEdit,
                       toast,
                       setFormError
                     )
-                  : handleSaveServiceDemand(
-                      registerServiceDemand,
-                      setServiceDemandRequest,
-                      setRegisterServiceDemand,
+                  : handleSaveItemDemand(
+                      registerItemDemand,
+                      setItemDemandRequest,
+                      setRegisterItemDemand,
                       toast,
                       setFormError
                     );
@@ -175,10 +174,10 @@ const CadastrarServiceDemandas = () => {
                 colorScheme="red"
                 variant="solid"
                 onClick={() => {
-                  handleDeleteServiceDemand(
-                    registerServiceDemand,
-                    setServiceDemandRequest,
-                    setRegisterServiceDemand,
+                  handleDeleteItemDemand(
+                    registerItemDemand,
+                    setItemDemandRequest,
+                    setRegisterItemDemand,
                     setIsEdit,
                     toast
                   );
@@ -194,19 +193,19 @@ const CadastrarServiceDemandas = () => {
       </Card>
       <DefaultTable
         props={{
-          tableName: "Demandas de serviço",
-          header: ["Tipo de serviço", "Quantidade", "Justificativa"],
+          tableName: "ItemDemandas",
+          header: ["Grupo", "Quantidade", "Justificativa"],
         }}
       >
-        {serviceDemandRequest?.length > 0 ? (
-          serviceDemandRequest.map(
-            (serviceDemand: IServiceDemandRegister, index: number) => {
+        {itemDemandRequest?.length > 0 ? (
+          itemDemandRequest.map(
+            (itemDemand: IItemDemandRegister, index: number) => {
               return (
                 <Fragment key={index}>
                   <Tr>
-                    <Td>{serviceDemand.serviceType}</Td>
-                    <Td>{serviceDemand.amount}</Td>
-                    <Td>{serviceDemand.justify}</Td>
+                    <Td>{itemDemand.groupId}</Td>
+                    <Td>{itemDemand.amount}</Td>
+                    <Td>{itemDemand.justify}</Td>
                     <Td>
                       <Button
                         leftIcon={<FiEdit />}
@@ -216,15 +215,14 @@ const CadastrarServiceDemandas = () => {
                         onClick={() => {
                           toast({
                             title:
-                              "Demanda de serviço " +
-                              serviceDemand.serviceType +
+                              "Demanda de " +
+                              itemDemand.groupId +
                               " selecionada",
                             status: "info",
                             position: "top",
                             isClosable: true,
                           });
-                          setRegisterServiceDemand(serviceDemand),
-                            setIsEdit(true);
+                          setRegisterItemDemand(itemDemand), setIsEdit(true);
                         }}
                       >
                         Editar
@@ -237,7 +235,7 @@ const CadastrarServiceDemandas = () => {
           )
         ) : (
           <Tr>
-            <Td>Nenhum demanda de serviço</Td>
+            <Td>Nenhuma demanda de item</Td>
           </Tr>
         )}
       </DefaultTable>
@@ -245,7 +243,7 @@ const CadastrarServiceDemandas = () => {
   );
 };
 
-export default CadastrarServiceDemandas;
+export default CadastrarItemDemandas;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { ["nextauth.token"]: token } = parseCookies(context);

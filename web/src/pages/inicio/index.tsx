@@ -21,61 +21,67 @@ const Home = () => {
   return (
     <Layout props={{ title: "Início" }}>
       Bem-vindo ao sistema,
-      <Flex flexDirection={"row"}>
-        <Flex flexDirection={"column"}>
-          <StatsCard
-            icon={<FaBuilding size={"2rem"} />}
-            title={"Cadastro de unidades"}
-            path={"/cadastrar-unidades"}
-          />
-          <StatsCard
-            icon={<FaCartPlus size={"2rem"} />}
-            title={"Cadastro de items"}
-            path={"/cadastrar-items"}
-          />
-          <StatsCard
-            icon={<FaHouseUser size={"2rem"} />}
-            title={"Cadastro de imóvel"}
-            path={"/cadastrar-imoveis"}
-          />
-          <StatsCard
-            icon={<FaHeadset size={"2rem"} />}
-            title={"Cadastro de serviços"}
-            path={"/cadastrar-servicos"}
-          />
-          <StatsCard
-            icon={<FaGlobe size={"2rem"} />}
-            title={"Cadastro de demanda"}
-            path={"/cadastrar-demanda"}
-          />
-        </Flex>
-        <Flex flexDirection={"column"}>
-          <StatsCard
-            icon={<FaHammer size={"2rem"} />}
-            title={"Cadastro de fabricantes"}
-            path={"/cadastrar-fabricantes"}
-          />
-          <StatsCard
-            icon={<FaLaptop size={"2rem"} />}
-            title={"Cadastro de modelos"}
-            path={"/cadastrar-modelos"}
-          />
-          <StatsCard
-            icon={<FaLayerGroup size={"2rem"} />}
-            title={"Cadastro de grupos"}
-            path={"/cadastrar-grupos"}
-          />
-          <StatsCard
-            icon={<FaIndustry size={"2rem"} />}
-            title={"Cadastro de fornecedores"}
-            path={"/cadastrar-fornecedores"}
-          />
-          <StatsCard
-            icon={<FaInfoCircle size={"2rem"} />}
-            title={"Cadastro de tipos de serviço"}
-            path={"/cadastrar-tipos-servico"}
-          />
-        </Flex>
+      <Flex width={"100hw"} flexDirection={"row"} flexWrap={"wrap"}>
+        <StatsCard
+          icon={<FaBuilding size={"2rem"} />}
+          title={"Cadastro de unidades"}
+          path={"/cadastrar-unidades"}
+        />
+        <StatsCard
+          icon={<FaCartPlus size={"2rem"} />}
+          title={"Cadastro de items"}
+          path={"/cadastrar-items"}
+        />
+        <StatsCard
+          icon={<FaHouseUser size={"2rem"} />}
+          title={"Cadastro de imóvel"}
+          path={"/cadastrar-imoveis"}
+        />
+        <StatsCard
+          icon={<FaHeadset size={"2rem"} />}
+          title={"Cadastro de serviços"}
+          path={"/cadastrar-servicos"}
+        />
+        <StatsCard
+          icon={<FaHeadset size={"2rem"} />}
+          title={"Demanda de serviços"}
+          path={"/cadastrar-demanda-servicos"}
+        />
+        <StatsCard
+          icon={<FaCartPlus size={"2rem"} />}
+          title={"Demanda de itens"}
+          path={"/cadastrar-demanda-itens"}
+        />
+        <StatsCard
+          icon={<FaHammer size={"2rem"} />}
+          title={"Cadastro de fabricantes"}
+          path={"/cadastrar-fabricantes"}
+        />
+        <StatsCard
+          icon={<FaLaptop size={"2rem"} />}
+          title={"Cadastro de modelos"}
+          path={"/cadastrar-modelos"}
+        />
+        <StatsCard
+          icon={<FaLayerGroup size={"2rem"} />}
+          title={"Cadastro de grupos"}
+          path={"/cadastrar-grupos"}
+        />
+        <StatsCard
+          icon={<FaIndustry size={"2rem"} />}
+          title={"Cadastro de fornecedores"}
+          path={"/cadastrar-fornecedores"}
+        />
+        <StatsCard
+          icon={<FaGlobe size={"2rem"} />}
+          title={"Cadastro de tipos de serviço"}
+          path={"/cadastrar-tipos-servico"}
+        />
+        <StatsCard
+          icon={<FaInfoCircle size={"2rem"} />}
+          title={"Cadastro de usuários"}
+          path={"/cadastrar-usuarios"}
+        />
       </Flex>
     </Layout>
   );

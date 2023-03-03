@@ -3,7 +3,7 @@ import { ToastId, UseToastOptions } from "@chakra-ui/react";
 // React
 import { Dispatch, SetStateAction } from "react";
 // Dado estático
-import { ITEM_DEMAND_INITIAL_DATA } from "../../../pages/cadastrar-demanda/cadastrar-demanda-itens";
+import { ITEM_DEMAND_INITIAL_DATA } from "../../../pages/cadastrar-demanda-itens";
 // Interfaces
 import {
   IItemDemandRegister,
