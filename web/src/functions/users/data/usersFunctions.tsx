@@ -3,7 +3,7 @@ import { ToastId, UseToastOptions } from "@chakra-ui/react";
 // React
 import { Dispatch, SetStateAction } from "react";
 // Dado estático
-import { SUPPLIER_INITIAL_DATA } from "../../../pages/cadastrar-fornecedores";
+import { USER_INITIAL_DATA } from "../../../pages/cadastrar-usuarios";
 // Interfaces
 import { IUserRegister, IUserRequest } from "./usersInterfaces";
 import apiLaravel from "../../../services/apiLaravel";
@@ -21,7 +21,7 @@ export const getUsers = async () => {
   return user;
 };
 
-// Salva o fornecedor
+// Salva o usuario
 export const handleSaveUser = async (
   registerUser: IUserRegister,
   setUserRequest: Dispatch<SetStateAction<IUserRequest>>,
@@ -35,7 +35,7 @@ export const handleSaveUser = async (
       .post("users", registerUser)
       .then(async () => {
         // Reinicia o formulário
-        setRegisterUser(SUPPLIER_INITIAL_DATA);
+        setRegisterUser(USER_INITIAL_DATA);
         // Atualiza a listagem de organizações
         setUserRequest(await getUsers());
         // Mensagem de sucesso
@@ -49,7 +49,7 @@ export const handleSaveUser = async (
       })
       .catch((error) => {
         toast({
-          title: "Erro ao cadastrar o fornecedor",
+          title: "Erro ao cadastrar o usuario",
           description: error.status,
           status: "error",
           position: "top",
@@ -60,7 +60,7 @@ export const handleSaveUser = async (
     // Informa o erro do formulário
     setFormError("registerUser");
     toast({
-      title: "Erro ao cadastrar o fornecedor",
+      title: "Erro ao cadastrar o usuario",
       description: "Campo NOME inválido",
       status: "error",
       position: "top",
@@ -69,7 +69,7 @@ export const handleSaveUser = async (
   }
 };
 
-// Edita o fornecedor
+// Edita o usuario
 const handleEditUser = async (
   registerUser: IUserRegister,
   setUserRequest: Dispatch<SetStateAction<IUserRequest>>,
@@ -84,7 +84,7 @@ const handleEditUser = async (
       .patch("users/" + registerUser.id, registerUser)
       .then(async () => {
         // Reinicia o formulário
-        setRegisterUser(SUPPLIER_INITIAL_DATA);
+        setRegisterUser(USER_INITIAL_DATA);
         // Atualiza a listagem de organizações
         setUserRequest(await getUsers());
         // Mensagem de sucesso
@@ -110,7 +110,7 @@ const handleEditUser = async (
     // Informa o erro do formulário
     setFormError("registerUser");
     toast({
-      title: "Erro ao cadastrar o fornecedor",
+      title: "Erro ao cadastrar o usuario",
       description: "Campo NOME inválido",
       status: "error",
       position: "top",
@@ -119,7 +119,7 @@ const handleEditUser = async (
   }
 };
 
-// Deleta o fornecedor
+// Deleta o usuario
 export const handleDeleteUser = async (
   registerUser: IUserRegister,
   setUserRequest: Dispatch<SetStateAction<IUserRequest>>,
@@ -133,7 +133,7 @@ export const handleDeleteUser = async (
     .delete("users/" + registerUser.id)
     .then(async () => {
       // Reinicia o formulário
-      setRegisterUser(SUPPLIER_INITIAL_DATA);
+      setRegisterUser(USER_INITIAL_DATA);
       // Atualiza a listagem de organizações
       setUserRequest(await getUsers());
       // Mensagem de sucesso

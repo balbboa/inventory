@@ -38,7 +38,7 @@ import handleEditOpm, {
 import { getImmobiles } from "../../functions/immobiles/data/immobilesFunctions";
 import { IImmobileRegister } from "../../functions/immobiles/data/immobilesInterfaces";
 
-export const OPM_INITIAL_DATA: any = {
+export const USER_INITIAL_DATA: any = {
   name: "",
   acronym: "",
 };
@@ -48,7 +48,7 @@ const CadastrarOpms = () => {
   // hooks
 
   // Organização
-  const [registerOpm, setRegisterOpm] = useState(OPM_INITIAL_DATA);
+  const [registerOpm, setRegisterOpm] = useState(USER_INITIAL_DATA);
   // Requisisões das organizações
   const [opmRequest, setOpmRequest] = useState<any>();
   const [optionsOpms, setOptionsOpms] = useState<any>();
@@ -96,9 +96,40 @@ const CadastrarOpms = () => {
         }}
       >
         <FormControl padding={5}>
+          <FormLabel>Pesquisar usuário</FormLabel>
+          <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
+            <Input
+              type="text"
+              value={registerOpm.name}
+              isInvalid={formError === "registerOpm"}
+              onChange={(event) => {
+                setRegisterOpm({
+                  ...registerOpm,
+                  name: event.currentTarget.value.toUpperCase(),
+                });
+                setFormError("");
+              }}
+            />
+            <Button
+              minW={150}
+              leftIcon={<BsPlusSquare />}
+              colorScheme="green"
+              variant="solid"
+              onClick={() => {
+                //getPolicial(cpf);
+              }}
+              ml={5}
+            >
+              Selecionar
+            </Button>
+          </Box>
+        </FormControl>
+        <FormControl padding={5}>
           <FormLabel>Usuário</FormLabel>
           <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
             <Input
+              isDisabled
+              variant="filled"
               type="text"
               value={registerOpm.name}
               isInvalid={formError === "registerOpm"}
@@ -199,6 +230,7 @@ const CadastrarOpms = () => {
           </Box>
         </FormControl>
       </Card>
+
       <DefaultTable
         props={{
           tableName: "Usuários",
